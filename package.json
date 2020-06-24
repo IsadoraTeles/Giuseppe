@@ -1,0 +1,27 @@
+{
+  "name": "giuseppe",
+  "version": "1.0.0",
+  "description": "This is the giuseppe website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IsadoraTeles/Giuseppe.git"
+  },
+  "keywords": [
+    "giuseppe",
+    "radio",
+    "performance"
+  ],
+  "author": "Isadora Teles",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IsadoraTeles/Giuseppe/issues"
+  },
+  "homepage": "https://github.com/IsadoraTeles/Giuseppe#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
