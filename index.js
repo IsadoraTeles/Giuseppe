@@ -5,21 +5,39 @@
 // using NeDB (very light)
 
 // SERVER SIDE CODE
-
-const express = require('express');
-const Datastore = require('nedb'); // creating a database on NeDB
+const express = require('express'); // creating a server obj
+const Datastore = require('nedb');  // creating a database on NeDB
 
 const app = express();
-const port = process.env.PORT || 3000
-app.listen(port, () => {
+const port = process.env.PORT || 3000;
+const server = app.listen(port, () => {
     console.log('Starting server at : ${port}')
 }
 );
-app.use(express.static('public'));
+const socket = require('socket.io')(server);  // creating a socket obj
+app.use(express.static('public'));     // use everything in 'public' dir
 app.use(express.json({ limit: '1mb' }));
 
+// DATABASE
 const database = new Datastore('database.db');
 database.loadDatabase();
+
+// CREATE SOCKET FOR THE SERVER
+//var io = socket(port);
+socket.sockets.on('connection', newConnection);
+
+function newConnection(socket) {
+    console.log('new connection: ' + socket.id);
+
+    socket.on('mouse', mouseMsg);
+
+    function mouseMsg(data) {
+        socket.broadcast.emit('mouse', data);
+        // io.sockets.emit('mouse', data);
+        console.log(data);
+    }
+}
+
 
 // SERVER GET POST
 app.get('/api', (request, response) => { // ROUTING

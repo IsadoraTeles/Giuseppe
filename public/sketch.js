@@ -1,3 +1,5 @@
+let socket;
+
 let capture;
 var w = 320;
 var h = 240;
@@ -7,6 +9,10 @@ var myLat = 0;
 var myLon = 0;
 
 function setup() {
+    // SOCKETS
+    socket = io.connect(); // (port)?  !!!!!!!!!
+    socket.on('mouse', newDrawing);
+
     //noCanvas();
     capture = createCapture({
         audio: false,
@@ -56,7 +62,20 @@ function setup() {
     }
 }
 
+///////////
+
+function newDrawing(data) {
+    fill(0, 255, 0);
+    ellipse(data.x, data.y, 20, 20);
+}
+
 function drawCircle(pos) {
+    var data = {
+        x: pos.x,
+        y: pos.y
+    }
+    socket.emit('mouse', data);
+
     ellipse(pos.x, pos.y, 20, 20);
 }
 
