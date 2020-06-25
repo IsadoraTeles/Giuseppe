@@ -1,10 +1,22 @@
 let capture;
+var w = 320;
+var h = 240;
 
 function setup() {
     //noCanvas();
-    createCanvas(320, 240);
-    capture = createCapture(VIDEO); // from client
-    capture.size(320, 240);
+    //createCanvas(320, 240);
+    capture = createCapture({
+        audio: false,
+        video: {
+            width: w,
+            height: h
+        }
+    }, function () {
+        console.log('capture ready.')
+    });
+    // from client
+    capture.size(w, h);
+    createCanvas(w, h);
     capture.hide();
 
     ///////
@@ -42,7 +54,55 @@ function setup() {
     }
 }
 
+function drawCircle(pos) {
+    ellipse(pos.x, pos.y, 20, 20);
+}
+
+var targetColor = [255, 0, 0];
 function draw() {
-    background(255, 0, 0);
-    image(capture, 0, 0, 320, 240);
+
+    capture.loadPixels();
+    var sampling = true;
+    var sumPosition = createVector(0, 0);
+    if (capture.pixels.length > 0) { // don't forget this!
+
+        var w = capture.width,
+            h = capture.height;
+        var i = 0;
+        var pixels = capture.pixels;
+        var thresholdAmount = 206.55;
+
+        var total = 0;
+        for (var y = 0; y < h; y++) {
+            for (var x = 0; x < w; x++) {
+                var diff =
+                    Math.abs(pixels[i + 0] - targetColor[0]) +
+                    Math.abs(pixels[i + 1] - targetColor[1]) +
+                    Math.abs(pixels[i + 2] - targetColor[2]);
+                var outputValue = 0;
+                if (diff < thresholdAmount) {
+                    outputValue = 255;
+                    sumPosition.x += x;
+                    sumPosition.y += y;
+                    total++;
+                }
+                pixels[i++] = outputValue; // set red
+                pixels[i++] = outputValue; // set green
+                pixels[i++] = outputValue; // set blue
+                i++; // skip alpha
+            }
+        }
+
+        sumPosition.div(total);
+
+    }
+    if (!sampling) {
+        capture.updatePixels();
+    }
+
+    image(capture, 0, 0, w, h);
+
+    fill(targetColor);
+    stroke(targetColor);
+    drawCircle(sumPosition);
 }
