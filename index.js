@@ -10,7 +10,11 @@ const express = require('express');
 const Datastore = require('nedb'); // creating a database on NeDB
 
 const app = express();
-app.listen(3000, () => console.log('listening at 3000'));
+const port = process.env.PORT || 3000
+app.listen(port, () => {
+    console.log('Starting server at : ${port}')
+}
+);
 app.use(express.static('public'));
 app.use(express.json({ limit: '1mb' }));
 
@@ -19,7 +23,7 @@ database.loadDatabase();
 
 // SERVER GET POST
 app.get('/api', (request, response) => { // ROUTING
-    database.find({}, (err, data) => {  
+    database.find({}, (err, data) => {
         if (err) {
             response.end();
             return;
@@ -39,7 +43,7 @@ app.post('/api', (request, response) => { // ROUTING
     database.insert(data);
     response.json(data); // sending the information back to the client
     // HOW TO CLEAR THE DATABASE ???
-}); 
+});
 
 //const port = process.env.PORT || 3000;
 
