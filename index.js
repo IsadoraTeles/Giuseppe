@@ -4,8 +4,7 @@
 // to share information with clients
 // using NeDB (very light)
 
-// SERVER CODE
-
+// SERVER SIDE CODE
 
 const express = require('express');
 const Datastore = require('nedb'); // creating a database on NeDB
@@ -18,26 +17,29 @@ app.use(express.json({ limit: '1mb' }));
 const database = new Datastore('database.db');
 database.loadDatabase();
 
-
-app.get('/api', (request, response) => {
-    database.find({}, (err, data) => {
+// SERVER GET POST
+app.get('/api', (request, response) => { // ROUTING
+    database.find({}, (err, data) => {  
         if (err) {
             response.end();
             return;
         }
-        response.json(data); // send data
+        response.json(data); // send data BACK TO CLIENT
     });
 });
 
-
 // CLIENT SEND POST
-app.post('/api', (request, response) => {
+// my application interface (api) for my clients to send data to me
+app.post('/api', (request, response) => { // ROUTING
+    console.log('I got a request!');
     const data = request.body;
+    // TIME OF REQUEST
     const timestamp = Date.now();
     data.timestamp = timestamp;
     database.insert(data);
-    response.json(data);
-}); // my application interface for my clients to send data to me
+    response.json(data); // sending the information back to the client
+    // HOW TO CLEAR THE DATABASE ???
+}); 
 
 //const port = process.env.PORT || 3000;
 

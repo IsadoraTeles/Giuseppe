@@ -3,7 +3,7 @@ let capture;
 function setup() {
 
     createCanvas(390, 240);
-    capture = createCapture(VIDEO);
+    const capture = createCapture(VIDEO); // from client
     capture.size(320, 240);
     capture.hide();
 
@@ -13,8 +13,8 @@ function setup() {
     const button = document.getElementById('submit');
     button.addEventListener('click', async event => {
         const mood = document.getElementById('mood').value;
-        video.loadPixels();
-        const image64 = video.canvas.toDataURL();
+        capture.loadPixels();
+        const image64 = video.canvas.toDataURL(); // convert image into ASCII text to send it to database
         const data = { lat, lon, mood, image64 };
         const options = {
             method: 'POST',
@@ -43,6 +43,6 @@ function setup() {
 }
 
 function draw() {
-    background(255);
+    background(0);
     image(capture, 0, 0, 320, 240);
 }

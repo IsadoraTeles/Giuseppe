@@ -9,7 +9,8 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.min.js"></script>
-  <script src="sketch.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/addons/p5.sound.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css" />
   <title>GIUSEPPE</title>
 </head>
 
@@ -29,36 +30,8 @@
   <label for="mood">enter your mood</label>
   <input id="mood" value="rainbow" />
   <button id="submit">submit</button>
+  <script src="sketch.js"></script>
 
-  <script>
-
-    // CLIENT SENDING POST DATA GEOLOCATION
-    /*
-    if ("geolocation" in navigator) {
-      console.log('geolocation available');
-      navigator.geolocation.getCurrentPosition(position => {
-        const lat = position.coords.latitude;
-        const lon = position.coords.longitude;
-        document.getElementById('latitude').textContent = lat;
-        document.getElementById('longitude').textContent = lon;
-
-        const data = { lat, lon };
-        const options = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(data)
-        };
-        fetch('/api', options);
-      });
-    }
-    else {
-      console.log('geolocation not available');
-    }
-    */
-
-  </script>
 </body>
 
 </html>
