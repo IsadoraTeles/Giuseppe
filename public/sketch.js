@@ -8,7 +8,7 @@ var myLon = 0;
 
 function setup() {
     //noCanvas();
-    //createCanvas(320, 240);
+    createCanvas(320, 240);
     capture = createCapture({
         audio: false,
         video: {
