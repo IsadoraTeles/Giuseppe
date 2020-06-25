@@ -109,7 +109,7 @@ function draw() {
     myLon = map(myLon, -180, 180, 0, w);
 
 
-    image(capture, 0, 0, w, h);
+    //image(capture, 0, 0, w, h);
 
     fill(targetColor);
     stroke(targetColor);
