@@ -1,3 +1,5 @@
+<!-- CLIENT SIDE-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.8.0/addons/p5.dom.min.js"></script>
   <script src="sketch.js"></script>
   <title>GIUSEPPE</title>
 </head>
@@ -15,19 +18,46 @@
   <script>
     //new p5(sketch, 'container');
   </script>
+
   <h1>GIUSEPPE</h1>
   <p>HELLO</p>
+  <div><a href="/">enter</a> | <a href="/logs">list</a></div>
+  <p>
+    latitude: <span id="latitude"></span>&deg;<br />
+    longitude: <span id="longitude"></span>&deg;
+  </p>
+  <label for="mood">enter your mood</label>
+  <input id="mood" value="rainbow" />
+  <button id="submit">submit</button>
+
   <script>
+
+    // CLIENT SENDING POST DATA GEOLOCATION
+    /*
     if ("geolocation" in navigator) {
       console.log('geolocation available');
-      navigator.geolocation.getCurrentPosition(function (position) {
-        console.log(position.coords.latitude);
-        console.log(position.coords.longitude);
+      navigator.geolocation.getCurrentPosition(position => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+        document.getElementById('latitude').textContent = lat;
+        document.getElementById('longitude').textContent = lon;
+
+        const data = { lat, lon };
+        const options = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        };
+        fetch('/api', options);
       });
     }
     else {
       console.log('geolocation not available');
     }
+    */
+
   </script>
 </body>
 
