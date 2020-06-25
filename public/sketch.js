@@ -104,14 +104,16 @@ function draw() {
     }
 
     myLat = lat;
-    myLat = map(myLat, -90, 90, 0, h);
+    myLat = map(myLat, -90, 90, h, 0);
     myLon = lon;
     myLon = map(myLon, -180, 180, 0, w);
-    ellipse(myLon, myLat, 10, 10);
+
 
     image(capture, 0, 0, w, h);
 
     fill(targetColor);
     stroke(targetColor);
     drawCircle(sumPosition);
+    fill(255);
+    ellipse(myLon, myLat, 10, 10);
 }
