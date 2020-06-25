@@ -2,6 +2,10 @@ let capture;
 var w = 320;
 var h = 240;
 
+let lat, lon;
+var myLat = 0;
+var myLon = 0;
+
 function setup() {
     //noCanvas();
     //createCanvas(320, 240);
@@ -21,7 +25,6 @@ function setup() {
 
     ///////
 
-    let lat, lon;
     const button = document.getElementById('submit');
     button.addEventListener('click', async event => {
         const mood = document.getElementById('mood').value;
@@ -99,6 +102,12 @@ function draw() {
     if (!sampling) {
         capture.updatePixels();
     }
+
+    myLat = lat;
+    myLat = map(myLat, -90, 90, 0, h);
+    myLon = lon;
+    myLon = map(myLon, -180, 180, 0, w);
+    ellipse(myLon, myLat, 10, 10);
 
     image(capture, 0, 0, w, h);
 
