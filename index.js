@@ -17,8 +17,9 @@ wCap.set(cv.CAP_PROP_FRAME_HEIGHT, 240);
 const app = express(); // new express app
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
-    console.log('Starting server at : ${port}')
+    console.log(`Starting server at : ${port}`)
 }
+    // imageElm.src = `data:image/jpeg;base64,${image}`;
 );
 const socket = require('socket.io')(server);  // creating a socket obj
 app.use(express.static('public'));     // use everything in 'public' dir
@@ -58,7 +59,7 @@ app.get('/api', (request, response) => { // ROUTING
     });
 
     // SENDING FILE TO CLIENTS
-    response.sendfile(path.join(_dirname, '...'));
+    //response.sendfile(path.join(_dirname, '...'));
 
 });
 
