@@ -11,7 +11,15 @@ var myLon = 0;
 function setup() {
     // SOCKETS
     socket = io.connect(); // (port)?  !!!!!!!!!
+
+    // DRAWING POSITION MESSAGE RECEIVED
     socket.on('mouse', newDrawing);
+
+    // VIDEO IMAGE MESSAGE RECEIVED
+    socket.on('image', (image) => {
+        const imageElm = document.getElementById('image');
+        imageElm.src = 'data:image/jpg;base64,${image}'
+    });
 
     //noCanvas();
     capture = createCapture({
