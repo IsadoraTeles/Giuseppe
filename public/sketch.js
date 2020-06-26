@@ -12,9 +12,6 @@ function setup() {
     // SOCKETS
     socket = io.connect(); // (port)?  !!!!!!!!!
 
-    // DRAWING POSITION MESSAGE RECEIVED
-    socket.on('mouse', newDrawing);
-
     // VIDEO IMAGE MESSAGE RECEIVED
     socket.on('image', image => {
         const imageElm = document.getElementById('image');
@@ -22,21 +19,6 @@ function setup() {
     });
 
     //noCanvas();
-
-    capture = createCapture({
-        audio: false,
-        video: {
-            width: w,
-            height: h
-        }
-    }, function () {
-        console.log('capture ready.')
-    });
-    // from client
-    capture.size(w, h);
-    createCanvas(w, h);
-    capture.hide();
-
 
     ///////
 
@@ -75,23 +57,19 @@ function setup() {
 ///////////
 
 function newDrawing(data) {
-    fill(0, 255, 0);
-    ellipse(data.x, data.y, 20, 20);
-}
-
-function drawCircle(pos) {
-    var data = {
-        x: pos.x,
-        y: pos.y
-    }
-    socket.emit('mouse', data);
-
-    ellipse(pos.x, pos.y, 20, 20);
-}
-
-var targetColor = [255, 0, 0];
-function draw() {
-
+    capture = createCapture({
+        audio: false,
+        video: {
+            width: w,
+            height: h
+        }
+    }, function () {
+        console.log('capture ready.')
+    });
+    // from client
+    capture.size(w, h);
+    createCanvas(w, h);
+    capture.hide();
 
     capture.loadPixels();
     var sampling = true;
@@ -146,4 +124,26 @@ function draw() {
     drawCircle(sumPosition);
     fill(255);
     ellipse(myLon, myLat, 10, 10);
+
+
+    fill(0, 255, 0);
+    ellipse(data.x, data.y, 20, 20);
+}
+
+function drawCircle(pos) {
+    var data = {
+        x: pos.x,
+        y: pos.y
+    }
+    socket.emit('mouse', data);
+
+    ellipse(pos.x, pos.y, 20, 20);
+}
+
+var targetColor = [255, 0, 0];
+function draw() {
+
+    // DRAWING POSITION MESSAGE RECEIVED
+    socket.on('mouse', newDrawing);
+
 }
