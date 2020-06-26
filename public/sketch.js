@@ -12,11 +12,22 @@ function setup() {
     // SOCKETS
     socket = io.connect(); // (port)?  !!!!!!!!!
 
+    const isServer = document.getElementById('server');
+    if (isServer != null) {
+        console.log('SERVER');
+    }
+    else {
+        console.log('CLIENT');
+    }
+
     // VIDEO IMAGE MESSAGE RECEIVED
     socket.on('image', image => {
         const imageElm = document.getElementById('image');
         imageElm.src = `data:image/jpeg;base64,${image}`;
     });
+
+    // DRAWING POSITION MESSAGE RECEIVED
+    socket.on('mouse', newDrawing);
 
     //noCanvas();
 
@@ -143,7 +154,6 @@ function drawCircle(pos) {
 var targetColor = [255, 0, 0];
 function draw() {
 
-    // DRAWING POSITION MESSAGE RECEIVED
-    socket.on('mouse', newDrawing);
+
 
 }

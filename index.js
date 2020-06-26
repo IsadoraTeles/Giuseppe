@@ -4,6 +4,10 @@
 // to share information with clients
 // using NeDB (very light)
 
+// P5 STUFF
+
+
+
 // SERVER SIDE CODE
 const path = require('path');
 const cv = require('opencv4nodejs');
@@ -63,11 +67,13 @@ app.get('/api', (request, response) => { // ROUTING
 
 });
 
+
 setInterval(() => {
     const frame = wCap.read(); // returns a matrix that represents the img
-    const image = cv.imencode('.jpg', frame).toString('base64');
-    socket.emit('image', image);
+    const imageCV = cv.imencode('.jpg', frame).toString('base64');
+    socket.emit('image', imageCV);
 }, 1000);
+
 
 // CLIENT SEND POST
 // my application interface (api) for my clients to send data to me
