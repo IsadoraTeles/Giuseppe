@@ -6,25 +6,23 @@
 
 // P5 STUFF
 
-
-
 // SERVER SIDE CODE
 const path = require('path');
-const cv = require('opencv4nodejs');
 const express = require('express'); // creating a server obj
 const Datastore = require('nedb');  // creating a database on NeDB
 
-const wCap = new cv.VideoCapture(0); // id 0 is the facecam
-wCap.set(cv.CAP_PROP_FRAME_WIDTH, 320);
-wCap.set(cv.CAP_PROP_FRAME_HEIGHT, 240);
+// OPENCV
+//const cv = require('opencv4nodejs');
+//const wCap = new cv.VideoCapture(0); // id 0 is the facecam
+//wCap.set(cv.CAP_PROP_FRAME_WIDTH, 320);
+//wCap.set(cv.CAP_PROP_FRAME_HEIGHT, 240);
+
 
 const app = express(); // new express app
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
     console.log(`Starting server at : ${port}`)
-}
-    // imageElm.src = `data:image/jpeg;base64,${image}`;
-);
+});
 const socket = require('socket.io')(server);  // creating a socket obj
 app.use(express.static('public'));     // use everything in 'public' dir
 app.use(express.json({ limit: '1mb' }));
@@ -68,12 +66,26 @@ app.get('/api', (request, response) => { // ROUTING
 });
 
 
+// SENDING CAPTURE FROM P5JS OBJECT NOT POSSIBLE
+/*
+setInterval(() => {
+    let captureServer;
+    captureServer = createCapture(VIDEO);
+    captureServer.size(320, 240);
+    captureServer.loadPixels();
+    const image64Server = captureServer.canvas.toDataURL(); // convert image into ASCII text to send it to database
+    socket.emit('imageFromServer', captureServer);
+}, 1000);
+*/
+
+// SENDING CAPTURE FROM OPENCV OBJECT
+/*
 setInterval(() => {
     const frame = wCap.read(); // returns a matrix that represents the img
     const imageCV = cv.imencode('.jpg', frame).toString('base64');
     socket.emit('image', imageCV);
 }, 1000);
-
+*/
 
 // CLIENT SEND POST
 // my application interface (api) for my clients to send data to me
@@ -90,5 +102,7 @@ app.post('/api', (request, response) => { // ROUTING
 });
 
 //const port = process.env.PORT || 3000;
+
+
 
 
